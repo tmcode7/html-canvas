@@ -5,6 +5,7 @@ canvas.height = window.innerHeight
 ctx.strokeStyle = "#BADA55"
 ctx.lineJoin = "round"
 ctx.lineCap = "round"
+ctx.lineWidth = 75
 
 let isDrawing = false
 let lastX = 0
@@ -12,12 +13,21 @@ let lastY = 0     //this gives the coordinates of the lines drawn
 
 
 function draw(e) {
-    if (!isDrawing) return   // stop running the function if mouse is not pressed down
-
+    if (!isDrawing) return  // stop running the function if mouse is not pressed down
+       ctx.beginPath()
+       ctx.moveTo(lastX, lastY)
+       ctx.lineTo(e.offsetX, e.offsetY)
+       ctx.stroke()
+       lastX = e.offsetX
+       lastY = e.offsetY 
 }
 
 canvas.addEventListener ("mousemove", draw)
-canvas.addEventListener ("mousedown", () => isDrawing = true)
+canvas.addEventListener ("mousedown", (e) => {
+    isDrawing = true
+    lastX = e.offsetX
+    lastY = e.offsetY 
+})
 canvas.addEventListener ("mouseup", () => isDrawing = false)
 canvas.addEventListener ("mouseout", () => isDrawing = false)
 
