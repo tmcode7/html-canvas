@@ -10,16 +10,18 @@ ctx.lineWidth = 75
 let isDrawing = false
 let lastX = 0
 let lastY = 0     //this gives the coordinates of the lines drawn
-
+let hue = 0
 
 function draw(e) {
     if (!isDrawing) return  // stop running the function if mouse is not pressed down
+       ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`
        ctx.beginPath()
        ctx.moveTo(lastX, lastY)
        ctx.lineTo(e.offsetX, e.offsetY)
        ctx.stroke()
        lastX = e.offsetX
        lastY = e.offsetY 
+       hue++
 }
 
 canvas.addEventListener ("mousemove", draw)
