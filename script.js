@@ -5,16 +5,18 @@ canvas.height = window.innerHeight
 ctx.strokeStyle = "#BADA55"
 ctx.lineJoin = "round"
 ctx.lineCap = "round"
-ctx.lineWidth = 75
+ctx.lineWidth = 100
 
 let isDrawing = false
 let lastX = 0
 let lastY = 0     //this gives the coordinates of the lines drawn
 let hue = 0
+let direction = true
 
 function draw(e) {
     if (!isDrawing) return  // stop running the function if mouse is not pressed down
        ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`
+       ctx.lineWidth = hue
        ctx.beginPath()
        ctx.moveTo(lastX, lastY)
        ctx.lineTo(e.offsetX, e.offsetY)
@@ -22,6 +24,17 @@ function draw(e) {
        lastX = e.offsetX
        lastY = e.offsetY 
        hue++
+       if (hue >= 360) {
+           hue = 0
+       }
+       if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) {
+           direction = !direction
+       }
+       if (direction) {
+        ctx.lineWidth++   
+       }else{
+        ctx.lineWidth--   
+       }
 }
 
 canvas.addEventListener ("mousemove", draw)
